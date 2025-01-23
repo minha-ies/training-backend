@@ -1,7 +1,7 @@
 {
   "name": "typescript",
   "version": "1.0.0",
-  "description": "Node, Typescript, Jest, ESLint Template Project",
+  "description": "MIES Backend",
   "main": "src/main.js",
   "scripts": {
     "dev": "ts-node -r tsconfig-paths/register ./src/main.ts --files",
@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "^5",
     "eslint-plugin-promise": "^7",
     "jest": "^29",
-    "jest-mock-extended": "^4",
+    "jest-mock-extended": "^4.0.0-beta1",
     "lint-staged": "^15",
     "prettier": "^3",
     "ts-jest": "^29",

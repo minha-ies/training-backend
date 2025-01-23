@@ -63,6 +63,7 @@ export default [
 
       // Regras para TypeScript
       '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
 
       // Regras para Imports
