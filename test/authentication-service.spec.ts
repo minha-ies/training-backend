@@ -1,48 +1,15 @@
 import { mock, MockProxy } from 'jest-mock-extended'
 
-class AuthenticationService {
-  constructor(
-    private readonly userAuth: UserAuthentication,
-    private readonly loadUser: LoadUser,
-  ) {}
+import { AuthenticationService } from '@features/authentication/application/authentication-service'
+import { LoadUser, UserAuthentication } from '@features/authentication/application/contracts'
+import {
+  AuthenticationError,
+  InvalidUserCredentialsError,
+  UserNotFoundError,
+} from '@features/authentication/application/errors'
+import { User } from '@features/authentication/domain'
 
-  execute(email: string, password: string): void {
-    if (this.userAuth.signIn(email, password)) {
-      if (this.loadUser.loadByEmail(email) == undefined) {
-        throw new UserNotFoundError()
-      }
-    }
-  }
-}
-
-interface UserAuthentication {
-  signIn(email: string, password: string): boolean
-}
-
-interface LoadUser {
-  loadByEmail(email: string): User | undefined
-}
-
-class AuthenticationError extends Error {
-  constructor(message: string) {
-    super(message)
-  }
-}
-
-class UserNotFoundError extends AuthenticationError {
-  constructor() {
-    super('user not found')
-  }
-}
-
-class User {
-  constructor(
-    readonly name: string,
-    readonly email: string,
-  ) {}
-}
-
-describe('AuthenticationService', () => {
+describe(AuthenticationService.name, () => {
   let name: string
   let email: string
   let password: string
@@ -71,20 +38,22 @@ describe('AuthenticationService', () => {
     expect(userAuth.signIn).toHaveBeenCalledTimes(1)
   })
 
-  test('should return undefined if UserAuthentication fails', () => {
+  test('should return InvalidUserCredentialsError if UserAuthentication fails', () => {
     // Arrange
     userAuth.signIn.mockReturnValueOnce(false)
     // Act
-    const result = sut.execute(email, password)
-    // Assert
-    expect(result).toBeUndefined()
+    try {
+      sut.execute(email, password)
+    } catch (error) {
+      // Assert
+      expect(error).toBeInstanceOf(InvalidUserCredentialsError)
+    }
   })
 
   test('should throw AuthenticationError if UserAuthentication throws', () => {
     // Arrange
-    const error = new AuthenticationError('any_error')
     userAuth.signIn.mockImplementationOnce(() => {
-      throw error
+      throw new Error('any_error')
     })
     // Act
     try {
@@ -102,9 +71,8 @@ describe('AuthenticationService', () => {
     sut.execute(email, password)
     // Assert
     expect(loadUser.loadByEmail).toHaveBeenCalledWith(email)
+    expect(loadUser.loadByEmail).toHaveBeenCalledTimes(1)
   })
-
-  test('should call TokenHandler if LoadUser succeeds', () => {})
 
   test('should throw UserNotFoundError if LoadUser fails', () => {
     // Arrange
@@ -113,5 +81,12 @@ describe('AuthenticationService', () => {
     expect(() => sut.execute(email, password)).toThrow(UserNotFoundError)
   })
 
-  test('should throws UnexpectedError if LoadUser throw', () => {})
+  test('should throws UnexpectedAuthenticationError if LoadUser throws', () => {
+    // Arrange
+    loadUser.loadByEmail.mockImplementationOnce(() => {
+      throw new Error('any_loading_user_error')
+    })
+    // Assert
+    expect(() => sut.execute(email, password)).toThrow(AuthenticationError)
+  })
 })
