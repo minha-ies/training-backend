@@ -13,7 +13,8 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "yarn run test --watch",
     "test:staged": "lint-staged",
-    "test:coverage": "yarn run test --config jest.coverage.config.ts --coverage"
+    "test:coverage": "yarn run test --config jest.coverage.config.ts --coverage",
+    "make-index": "ts-node src/scripts/generate-index.ts"
   },
   "keywords": [],
   "author": "Eyder Rios",
@@ -23,10 +24,12 @@
     "rimraf": "^4"
   },
   "dependencies": {
-    "dotenv": "^16"
+    "dotenv": "^16",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@types/jest": "^29",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",

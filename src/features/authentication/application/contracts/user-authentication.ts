@@ -1,3 +1,3 @@
 export interface UserAuthentication {
-  signIn(email: string, password: string): boolean
+  signIn(email: string, password: string): Promise<boolean>
 }

@@ -36,7 +36,7 @@ export default [
       "@typescript-eslint": eslintPluginTypeScript,
     },
     rules: {
-      // Regras do Prettier integradas ao ESLint
+      // Prittier rules
       "prettier/prettier": [
         "error",
         {
@@ -50,16 +50,16 @@ export default [
         },
       ],
 
-      // Regras gerais de boas práticas
+      // General rules
       // 'no-console': 'warn',
       "no-debugger": "error",
 
-      // Regras para TypeScript
+      // TypeScript rules
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/explicit-module-boundary-types": "off",
 
-      // Regras para Imports
+      // Imports rules
       "import/order": [
         "error",
         {
@@ -80,14 +80,14 @@ export default [
         },
       ],
 
-      // Regras do Jest
-      "jest/no-disabled-tests": "warn",
+      // Jest rules
+      "jest/no-disabled-tests": "off",
       "jest/no-focused-tests": "warn",
       "jest/no-identical-title": "error",
       "jest/prefer-to-have-length": "warn",
       "jest/valid-expect": "error",
 
-      // Regras para Promises
+      // Promises rules
       "promise/always-return": "warn",
       "promise/no-return-wrap": "error",
       "promise/catch-or-return": "error",

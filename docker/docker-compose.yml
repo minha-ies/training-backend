@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_mies
+    restart: "no"
+    environment:
+      POSTGRES_USER: ${MIES_DB_USER}
+      POSTGRES_PASSWORD: ${MIES_DB_PASSWORD}
+      POSTGRES_DB: ${MIES_DB_NAME}
+    ports:
+      - "${MIES_DB_PORT}:5432"
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    tmpfs:
+      - /var/lib/postgresql/data
+    networks:
+      - mies_network
+
+networks:
+  mies_network:
