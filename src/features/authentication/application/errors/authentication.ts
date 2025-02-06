@@ -1,8 +1,4 @@
-export class AuthenticationError extends Error {
-  constructor(message: string) {
-    super(message)
-  }
-}
+import { AuthenticationError, NotFoundError } from '@shared/errors'
 
 export class InvalidUserCredentialsError extends AuthenticationError {
   constructor() {
@@ -10,7 +6,7 @@ export class InvalidUserCredentialsError extends AuthenticationError {
   }
 }
 
-export class UserNotFoundError extends AuthenticationError {
+export class UserNotFoundError extends NotFoundError {
   constructor() {
     super('user not found')
   }

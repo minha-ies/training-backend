@@ -1,8 +1,9 @@
 import { Service } from '@shared/application'
+import { AuthenticationError } from '@shared/errors'
 
 import { UserAuthentication, LoadUser, TokenHandler } from './contracts'
 import { Authentication } from '../domain'
-import { AuthenticationError, InvalidUserCredentialsError, UserNotFoundError } from './errors'
+import { InvalidUserCredentialsError, UserNotFoundError } from './errors'
 
 export class AuthenticationService implements Service<AuthenticationServiceParams, Authentication> {
   constructor(
@@ -12,22 +13,26 @@ export class AuthenticationService implements Service<AuthenticationServiceParam
   ) {}
 
   async execute(params: AuthenticationServiceParams): Promise<Authentication> {
-    const email = params.email
-    const password = params.password
+    const { email, password } = params
+
     try {
       const result = await this.userAuth.signIn(email, password)
       if (!result) throw new InvalidUserCredentialsError()
+
       const user = await this.loadUser.loadByEmail(email)
-      if (user === undefined) throw new UserNotFoundError()
+      if (!user) throw new UserNotFoundError()
+
       const payload = { email: user.email, name: user.name }
       const token = await this.tokenHandler.encrypt(payload)
+
       return { token }
     } catch (error) {
       if (error instanceof AuthenticationError) {
         throw error
-      } else {
-        throw new AuthenticationError(`unexpected error: ${(error as Error).message}`)
       }
+      const message = `unexpected error: ${(error as Error).message}`
+      console.log(message)
+      throw new AuthenticationError(message)
     }
   }
 }

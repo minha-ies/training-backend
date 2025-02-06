@@ -2,12 +2,9 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 import { AuthenticationService } from '@features/authentication/application/authentication-service'
 import { LoadUser, TokenHandler, UserAuthentication } from '@features/authentication/application/contracts'
-import {
-  AuthenticationError,
-  InvalidUserCredentialsError,
-  UserNotFoundError,
-} from '@features/authentication/application/errors'
+import { InvalidUserCredentialsError, UserNotFoundError } from '@features/authentication/application/errors'
 import { User } from '@shared/domain'
+import { AuthenticationError } from '@shared/errors'
 
 describe(AuthenticationService.name, () => {
   let token: string
