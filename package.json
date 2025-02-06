@@ -14,7 +14,8 @@
     "test:watch": "yarn run test --watch",
     "test:staged": "lint-staged",
     "test:coverage": "yarn run test --config jest.coverage.config.ts --coverage",
-    "make-index": "ts-node src/scripts/generate-index.ts"
+    "make-index": "ts-node scripts/generate-index.ts",
+    "tree": "tree -L 9 --dirsfirst"
   },
   "keywords": [],
   "author": "Eyder Rios",
@@ -25,7 +26,8 @@
   },
   "dependencies": {
     "dotenv": "^16",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "pg-promise": "^11.10.2"
   },
   "devDependencies": {
     "@types/jest": "^29",

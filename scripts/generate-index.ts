@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const projectRoot = path.resolve(__dirname, '../')
+const projectRoot = path.resolve(__dirname, '../src')
 
 const removeExistingIndexes = (directory: string) => {
   for (const file of fs.readdirSync(directory)) {
@@ -29,9 +29,7 @@ const generateIndexFile = (directory: string) => {
   console.log(`✅ Generated: ${path.relative(projectRoot, indexPath)}`)
 }
 
-const basePath = path.resolve(__dirname, '../')
-
-removeExistingIndexes(basePath)
+removeExistingIndexes(projectRoot)
 
 const walkSync = (dir: string) => {
   generateIndexFile(dir)
@@ -44,4 +42,4 @@ const walkSync = (dir: string) => {
   }
 }
 
-walkSync(basePath)
+walkSync(projectRoot)

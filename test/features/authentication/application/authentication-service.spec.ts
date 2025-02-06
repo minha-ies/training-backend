@@ -7,7 +7,7 @@ import {
   InvalidUserCredentialsError,
   UserNotFoundError,
 } from '@features/authentication/application/errors'
-import { User } from '@features/authentication/domain'
+import { User } from '@shared/domain'
 
 describe(AuthenticationService.name, () => {
   let token: string
@@ -25,7 +25,7 @@ describe(AuthenticationService.name, () => {
     name = 'John Doe'
     email = 'john.doe@email.com'
     password = 'any_password'
-    user = new User(name, email)
+    user = new User(12345, name, email)
     userAuth = mock<UserAuthentication>()
     userAuth.signIn.mockResolvedValue(true)
     loadUser = mock<LoadUser>()

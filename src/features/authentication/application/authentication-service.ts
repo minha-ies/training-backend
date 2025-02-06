@@ -1,5 +1,7 @@
+import { Service } from '@shared/application'
+
 import { UserAuthentication, LoadUser, TokenHandler } from './contracts'
-import { Service, Authentication } from '../domain'
+import { Authentication } from '../domain'
 import { AuthenticationError, InvalidUserCredentialsError, UserNotFoundError } from './errors'
 
 export class AuthenticationService implements Service<AuthenticationServiceParams, Authentication> {
